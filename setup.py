@@ -6,7 +6,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='bcp47',
-    version='0.0.4',
+    version='0.0.6',
     author='Jonas Byström',
     author_email='highfestiva@gmail.com',
     description='Language tags made easy',
