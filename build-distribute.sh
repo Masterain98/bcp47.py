@@ -1,5 +1,6 @@
 #!/bin/bash
 
+rm -Rf dist/* build/*
 python3 setup.py sdist bdist_wheel
 
 echo "Deploying in 10..."

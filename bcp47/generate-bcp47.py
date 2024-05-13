@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
-import bisect
-import json
 from PyPDF2 import PdfReader
 import os
 import requests
@@ -112,7 +110,7 @@ def write_output(name_tag):
         namecache = set()
         for name,tag in name_tag:
             if name in namecache:
-                name += ', ' + tag.split('-')[-1]
+                name += ', ' + tag.split('-')[-1] # add tag if same language has two different codes
             assert name not in namecache, f'{name} already entered before'
             namecache.add(name)
             print('    "%s": "%s",' % (name, tag), file=w)
