@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
+import bisect
+import json
 from PyPDF2 import PdfReader
 import os
 import requests
@@ -8,7 +10,7 @@ import requests
 
 url = 'https://winprotocoldoc.blob.core.windows.net/productionwindowsarchives/MS-LCID/[MS-LCID].pdf'
 language_markers = [' Windows ', ' Release ']
-bad_markers = ['release:', 'operating', 'server', 'first', 'supported']
+bad_markers = ['release:', 'operating', 'server', 'first', 'supported', ' elk ', 'LCID support']
 join_markers = ['Pseudo', 'Standard']
 languages = set()
 countries = set()
@@ -64,6 +66,8 @@ def extract_phrase_name_tag(phrase):
     lang,country = cleanup(lang),cleanup(country)
     if tag:
         tag = tag.replace(' ', '')
+        if tag.endswith(','):
+            tag = tag[:-1]
     # print(f'"{phrase}", {words}') # debug
     languages.add(lang)
     countries.add(country)
@@ -133,5 +137,6 @@ with open('.buffer.pdf', 'rb') as r:
         phrases = page.extract_text().splitlines()
         phrases = join_phrases(phrases)
         name_tag += generate_page(phrases)
+assert name_tag
 write_output(name_tag)
 print('file generation complete')
